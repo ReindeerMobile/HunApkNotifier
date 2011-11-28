@@ -18,7 +18,7 @@ public class HunApkService extends Service {
 	private Looper mServiceLooper;
 	private ServiceHandler mServiceHandler;
 	private NotificationManager mNotificationManager;
-	private Notification notification;
+//	private Notification notCCification;
 
 	// Handler that receives messages from the thread
 	private final class ServiceHandler extends Handler {
