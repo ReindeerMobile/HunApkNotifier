@@ -1,3 +1,4 @@
+
 package com.reindeermobile.hunapknotifier;
 
 import android.app.Activity;
@@ -7,20 +8,37 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class HunApkNotifierActivity extends Activity implements OnClickListener {
+public class HunApkNotifierActivity extends Activity {
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+    private Intent intent = null;
 
-		Button notifyButton = (Button) findViewById(R.id.notifyButton);
-		notifyButton.setOnClickListener(this);
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-	@Override
-	public void onClick(View v) {
-		Intent intent = new Intent(this, HunApkService.class);
-		startService(intent);
-	}
+        Button startNotifyButton = (Button) findViewById(R.id.startNotifyButton);
+        startNotifyButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (intent == null) {
+                    intent = new Intent(HunApkNotifierActivity.this, HunApkService.class);
+                }
+                startService(intent);
+            }
+        });
+
+        Button stopNotifyButton = (Button) findViewById(R.id.stopNotifyButton);
+        stopNotifyButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (intent != null) {
+                    stopService(intent);
+                }
+            }
+        });
+    }
+
 }

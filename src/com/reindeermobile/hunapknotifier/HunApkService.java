@@ -1,3 +1,4 @@
+
 package com.reindeermobile.hunapknotifier;
 
 import android.app.Notification;
@@ -15,93 +16,96 @@ import android.os.Process;
 import android.widget.Toast;
 
 public class HunApkService extends Service {
-	private Looper mServiceLooper;
-	private ServiceHandler mServiceHandler;
-	private NotificationManager mNotificationManager;
-//	private Notification notCCification;
+    private Looper mServiceLooper;
+    private ServiceHandler mServiceHandler;
+    private NotificationManager mNotificationManager;
 
-	// Handler that receives messages from the thread
-	private final class ServiceHandler extends Handler {
-		public ServiceHandler(Looper looper) {
-			super(looper);
-		}
+    // private Notification notCCification;
 
-		@Override
-		public void handleMessage(Message msg) {
-			for (int i = 0; i < 5; i++) {
-				// Normally we would do some work here, like download a file.
-				// For our sample, we just sleep for 5 seconds.
-				long endTime = System.currentTimeMillis() + 10 * 1000;
-				while (System.currentTimeMillis() < endTime) {
-					synchronized (this) {
-						try {
-							wait(endTime - System.currentTimeMillis());
-						} catch (Exception e) {
-						}
-					}
-				}
-				
-				mNotificationManager.notify(i, task("New notify!", "Id: " + i));
-			}
-			// Stop the service using the startId, so that we don't stop
-			// the service in the middle of handling another job
-			stopSelf(msg.arg1);
-		}
-	}
+    // Handler that receives messages from the thread
+    private final class ServiceHandler extends Handler {
+        public ServiceHandler(Looper looper) {
+            super(looper);
+        }
 
-	@Override
-	public void onCreate() {
-		// Start up the thread running the service. Note that we create a
-		// separate thread because the service normally runs in the process's
-		// main thread, which we don't want to block. We also make it
-		// background priority so CPU-intensive work will not disrupt our UI.
-		HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
-		thread.start();
+        @Override
+        public void handleMessage(Message msg) {
+            for (int i = 0; i < 5; i++) {
+                // Normally we would do some work here, like download a file.
+                // For our sample, we just sleep for 5 seconds.
+                long endTime = System.currentTimeMillis() + 10 * 1000;
+                while (System.currentTimeMillis() < endTime) {
+                    synchronized (this) {
+                        try {
+                            wait(endTime - System.currentTimeMillis());
+                            // TODO ide kell az a helyi adatbázis és az online adatbázis összehasonlítása
+                        } catch (Exception e) {
+                        }
+                    }
+                }
 
-		// Get the HandlerThread's Looper and use it for our Handler
-		mServiceLooper = thread.getLooper();
-		mServiceHandler = new ServiceHandler(mServiceLooper);
+                mNotificationManager.notify(i, task("New notify!", "Id: " + i));
+            }
+            // Stop the service using the startId, so that we don't stop
+            // the service in the middle of handling another job
+            stopSelf(msg.arg1);
+        }
+    }
 
-		String ns = Context.NOTIFICATION_SERVICE;
-		mNotificationManager = (NotificationManager) getSystemService(ns);
-	}
+    @Override
+    public void onCreate() {
+        // Start up the thread running the service. Note that we create a
+        // separate thread because the service normally runs in the process's
+        // main thread, which we don't want to block. We also make it
+        // background priority so CPU-intensive work will not disrupt our UI.
+        HandlerThread thread = new HandlerThread("ServiceStartArguments",
+                Process.THREAD_PRIORITY_BACKGROUND);
+        thread.start();
 
-	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        // Get the HandlerThread's Looper and use it for our Handler
+        mServiceLooper = thread.getLooper();
+        mServiceHandler = new ServiceHandler(mServiceLooper);
 
-		Message msg = mServiceHandler.obtainMessage();
-		msg.arg1 = startId;
-		mServiceHandler.sendMessage(msg);
+        String ns = Context.NOTIFICATION_SERVICE;
+        mNotificationManager = (NotificationManager) getSystemService(ns);
+    }
 
-		return START_STICKY;
-	}
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
-	@Override
-	public IBinder onBind(Intent intent) {
-		return null;
-	}
+        Message msg = mServiceHandler.obtainMessage();
+        msg.arg1 = startId;
+        mServiceHandler.sendMessage(msg);
 
-	@Override
-	public void onDestroy() {
-		Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
-	}
+        return START_STICKY;
+    }
 
-	private Notification task(String title, String message) {
-		int icon = R.drawable.icon;
-		CharSequence tickerText = "New Hun Apk!";
-		long when = System.currentTimeMillis();
-		
-		Notification notification = new Notification(icon, tickerText, when);
-		
-		Context context = getApplicationContext();
-		CharSequence contentTitle = title;
-		CharSequence contentText = message;
-		Intent notificationIntent = new Intent(this, HunApkNotifierActivity.class);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		
-		return notification;
-	}
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+    }
+
+    private Notification task(String title, String message) {
+        int icon = R.drawable.icon;
+        CharSequence tickerText = "New Hun Apk!";
+        long when = System.currentTimeMillis();
+
+        Notification notification = new Notification(icon, tickerText, when);
+
+        Context context = getApplicationContext();
+        CharSequence contentTitle = title;
+        CharSequence contentText = message;
+        Intent notificationIntent = new Intent(this, HunApkNotifierActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+        return notification;
+    }
 }
