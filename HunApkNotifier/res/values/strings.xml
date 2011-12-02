@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, HunApkNotifierActivity!</string>
+    <string name="app_name">HunApkNotifier</string>
+    <string name="start_button">Indítás</string>
+    <string name="stop_button">Leállítás</string>
+</resources>

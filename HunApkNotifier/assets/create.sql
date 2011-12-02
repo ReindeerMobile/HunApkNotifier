@@ -1,0 +1,1 @@
+CREATE TABLE hunapkinfo (_id INTEGER PRIMARY KEY, name TEXT, date TIMESTAMP, link VARCHAR(255), author VARCHAR(255));
