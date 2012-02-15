@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="56dip"
+    android:background="#111111"
+    android:padding="8dip" >
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:singleLine="true"
+        android:text="Klondike Solitaire - Pasziánsz magyarul"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/textViewAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="RootRulez"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewAuthor"
+        android:layout_alignBottom="@+id/textViewAuthor"
+        android:layout_alignParentRight="true"
+        android:text="11-11-06"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+</RelativeLayout>

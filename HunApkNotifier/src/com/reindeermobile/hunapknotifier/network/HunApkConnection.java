@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HunApkConnection {
+	public static final String TAG = "HunApkConnection";
+	
     private static final int HTTP_TIMEOUT = 3600;
-    private static final String url = "http://rootrulez.uw.hu/down.hunapk";
+    public static final String URL = "http://rootrulez.uw.hu/down.hunapk";
 
     private DefaultHttpClient httpClient;
 
@@ -36,21 +38,21 @@ public class HunApkConnection {
         HttpConnectionParams.setSoTimeout(params, HTTP_TIMEOUT);
 
         if (this.httpClient != null) {
-            Log.d(getClass().getName(), "init http client: success");
+            Log.d(TAG, "HunApkConnection - init http client: success");
         }
     }
 
     private HttpResponse send() throws ClientProtocolException, IOException {
-        HttpPost httpPost = new HttpPost(url);
+        HttpPost httpPost = new HttpPost(URL);
         HttpResponse response = null;
         try {
             response = this.httpClient.execute(httpPost);
         } catch (IOException exception) {
-            Log.w("network", exception.getMessage(), exception);
+            Log.w(TAG, "send - " + exception.getMessage(), exception);
         }
         return response;
     }
-
+    
     public List<HunApkInfo> getList() throws IllegalStateException, IOException, ParseException {
         HttpEntity entity = send().getEntity();
         InputStream is = entity.getContent();
@@ -94,7 +96,7 @@ public class HunApkConnection {
                 count++;
             }
         } catch (NumberFormatException exception) {
-            Log.e("network", exception.getMessage(), exception);
+            Log.e(TAG, "getList - " + exception.getMessage(), exception);
         }
         bufferedReader.close();
         return apkInfoList;
