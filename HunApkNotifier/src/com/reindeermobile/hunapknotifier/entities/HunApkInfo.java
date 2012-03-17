@@ -1,35 +1,44 @@
 package com.reindeermobile.hunapknotifier.entities;
 
+import com.reindeermobile.reindeerutils.db.BaseDbEntity;
+import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Column;
+import com.reindeermobile.reindeerutils.db.DbAdapterFactory.NotNull;
+import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Table;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HunApkInfo implements Comparable<HunApkInfo> {
-	private int id;
+@Table(name = "hun_apk_info")
+public class HunApkInfo extends BaseDbEntity implements Comparable<HunApkInfo> {
+
+	@Column
+	@NotNull
 	private String name;
+	
+	@Column
 	private Date date;
+	
+	@Column
+	@NotNull
 	private String link;
+	
+	@Column
 	private String author;
 
 	public List<HunApkInfo> getDifferences(List<HunApkInfo> local,
 			List<HunApkInfo> online) {
 		List<HunApkInfo> differences = new ArrayList<HunApkInfo>();
-
 		for (HunApkInfo hunApkInfo : online) {
 			if (!local.contains(hunApkInfo)) {
 				differences.add(hunApkInfo);
 			}
 		}
-
 		return differences;
 	}
 
 	public HunApkInfo() {
 		super();
-	}
-
-	public final int getId() {
-		return this.id;
 	}
 
 	public final String getName() {
@@ -42,10 +51,6 @@ public class HunApkInfo implements Comparable<HunApkInfo> {
 
 	public final String getLink() {
 		return this.link;
-	}
-
-	public final void setId(int id) {
-		this.id = id;
 	}
 
 	public final void setName(String name) {
@@ -77,58 +82,71 @@ public class HunApkInfo implements Comparable<HunApkInfo> {
 		}
 		return 0;
 	}
-
-	@Override
-	public String toString() {
-		return "HunApkInfo [id=" + this.id + ", name=" + this.name + ", date="
-				+ this.date + ", link=" + this.link + ", author=" + this.author
-				+ "]";
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((author == null) ? 0 : author.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((link == null) ? 0 : link.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		int result = super.hashCode();
+		result = prime * result
+				+ ((this.author == null) ? 0 : this.author.hashCode());
+		result = prime * result
+				+ ((this.date == null) ? 0 : this.date.hashCode());
+		result = prime * result
+				+ ((this.link == null) ? 0 : this.link.hashCode());
+		result = prime * result
+				+ ((this.name == null) ? 0 : this.name.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		HunApkInfo other = (HunApkInfo) obj;
-		if (author == null) {
-			if (other.author != null)
+		if (this.author == null) {
+			if (other.author != null) {
 				return false;
-		} else if (!author.equals(other.author))
+			}
+		} else if (!this.author.equals(other.author)) {
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		}
+		if (this.date == null) {
+			if (other.date != null) {
 				return false;
-		} else if (!date.equals(other.date))
+			}
+		} else if (!this.date.equals(other.date)) {
 			return false;
-		if (id != other.id)
-			return false;
-		if (link == null) {
-			if (other.link != null)
+		}
+		if (this.link == null) {
+			if (other.link != null) {
 				return false;
-		} else if (!link.equals(other.link))
+			}
+		} else if (!this.link.equals(other.link)) {
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		}
+		if (this.name == null) {
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!this.name.equals(other.name)) {
 			return false;
+		}
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "HunApkInfo [name=" + this.name + ", date=" + this.date
+				+ ", link=" + this.link + ", author=" + this.author + ", id="
+				+ this.id + "]";
+	}
+
+	
 }

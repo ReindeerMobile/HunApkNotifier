@@ -21,8 +21,8 @@
             android:textSize="18sp" />
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true" />
     </RelativeLayout>
@@ -34,24 +34,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" >
         <Button
-            android:id="@+id/buttonHide"
-            android:layout_width="90dip"
-            android:layout_height="40dip"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Elrejtés" />
-        <Button
             android:id="@+id/buttonExit"
             android:layout_width="90dip"
             android:layout_height="40dip"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:text="Kilépés" />
+        <Button
+            android:id="@+id/buttonHide"
+            android:layout_width="90dip"
+            android:layout_height="40dip"
+            android:layout_alignBaseline="@+id/buttonExit"
+            android:layout_alignBottom="@+id/buttonExit"
+            android:layout_alignParentRight="true"
+            android:text="Elrejtés" />
         <Button
             android:id="@+id/buttonRefresh"
             android:layout_width="90dip"
             android:layout_height="40dip"
-            android:layout_alignParentTop="true"
+            android:layout_alignBaseline="@+id/buttonHide"
+            android:layout_alignBottom="@+id/buttonHide"
             android:layout_toLeftOf="@+id/buttonHide"
             android:text="Frissítés" />
     </RelativeLayout>
@@ -62,8 +64,8 @@
         android:layout_above="@+id/relativeLayout2"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout1"
-        android:layout_marginLeft="16dip"
-        android:layout_marginRight="16dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:divider="#000000" >
     </ListView>
 </RelativeLayout>

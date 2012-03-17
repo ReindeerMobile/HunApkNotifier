@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class HunApkConnection {
 	public static final String TAG = "HunApkConnection";
 	
