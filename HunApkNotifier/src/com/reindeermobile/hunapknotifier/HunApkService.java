@@ -38,7 +38,6 @@ public class HunApkService extends Service {
                     synchronized (this) {
                         try {
                             wait(endTime - System.currentTimeMillis());
-                            // TODO ide kell az a helyi adatbázis és az online adatbázis összehasonlítása
                         } catch (Exception e) {
                         }
                     }

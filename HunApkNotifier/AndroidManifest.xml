@@ -18,6 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".HunApkService" />
+        <activity
+            android:name=".JumpToLinkActivity"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </activity>
+        <service android:name=".services.HunApkService" >
+        </service>
     </application>
 </manifest>

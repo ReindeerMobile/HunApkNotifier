@@ -2,18 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="56dip"
-    android:background="#111111"
+    android:background="#000000"
     android:padding="8dip" >
     <TextView
         android:id="@+id/textViewName"
+        style="@style/bold_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:singleLine="true"
-        android:text="Klondike Solitaire - Pasziánsz magyarul"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:text="Klondike Solitaire - Pasziánsz magyarul" />
     <TextView
         android:id="@+id/textViewAuthor"
         android:layout_width="wrap_content"

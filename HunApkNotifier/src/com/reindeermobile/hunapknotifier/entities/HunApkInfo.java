@@ -5,28 +5,35 @@ import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Column;
 import com.reindeermobile.reindeerutils.db.DbAdapterFactory.NotNull;
 import com.reindeermobile.reindeerutils.db.DbAdapterFactory.Table;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Table(name = "hun_apk_info")
-public class HunApkInfo extends BaseDbEntity implements Comparable<HunApkInfo> {
+public class HunApkInfo extends BaseDbEntity implements Comparable<HunApkInfo>,
+		Parcelable {
 
 	@Column
 	@NotNull
 	private String name;
-	
+
 	@Column
 	private Date date;
-	
+
 	@Column
 	@NotNull
 	private String link;
-	
+
 	@Column
 	private String author;
 
-	public List<HunApkInfo> getDifferences(List<HunApkInfo> local,
+	@Column
+	private boolean readed;
+
+	public static List<HunApkInfo> getDifferences(List<HunApkInfo> local,
 			List<HunApkInfo> online) {
 		List<HunApkInfo> differences = new ArrayList<HunApkInfo>();
 		for (HunApkInfo hunApkInfo : online) {
@@ -73,16 +80,29 @@ public class HunApkInfo extends BaseDbEntity implements Comparable<HunApkInfo> {
 		this.author = author;
 	}
 
+	public boolean isReaded() {
+		return readed;
+	}
+
+	public void setReaded(boolean readed) {
+		this.readed = readed;
+	}
+
 	@Override
 	public int compareTo(HunApkInfo another) {
-		if (this.id < another.getId()) {
-			return -1;
-		} else if (this.id > another.getId()) {
-			return 1;
+		if (this.date != null && another.getDate() != null) {
+			return this.date.compareTo(another.getDate()) * -1;
+		} else {
+			if (this.date == null) {
+				return -1;
+			} else if (another.getDate() == null) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
-		return 0;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -148,5 +168,18 @@ public class HunApkInfo extends BaseDbEntity implements Comparable<HunApkInfo> {
 				+ this.id + "]";
 	}
 
-	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.name);
+		dest.writeLong(this.date.getTime());
+		dest.writeString(this.link);
+		dest.writeString(this.author);
+		dest.writeInt((this.readed) ? 1 : 0);
+	}
+
 }
